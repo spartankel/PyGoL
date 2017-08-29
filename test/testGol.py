@@ -1,6 +1,7 @@
 import unittest
 import sys
 sys.path.append("..")
+sys.path.append(".")
 import gol
 
 # Probability table for the MC tests
