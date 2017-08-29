@@ -1,4 +1,4 @@
 language: python
 rvm:
  - "2.7"
-script: test/testGol.py
+script: python test/testGol.py
