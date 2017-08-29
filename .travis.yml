@@ -2,4 +2,4 @@ language: python
 rvm:
  - "2.7"
 install: "pip install -r requeriments.txt"
-script: python test/testGol.py
+script: python test/standard.py
