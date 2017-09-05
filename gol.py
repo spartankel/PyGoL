@@ -1,5 +1,4 @@
 from copy import deepcopy
-from logger import Logger
 import colorama
 import argparse
 import random
