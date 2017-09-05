@@ -106,6 +106,14 @@ class Grid:
 		for cell in self:
 			cell._alive = random.choice([True, False])
 
+	def killAll(self):
+		for cell in self:
+			cell.death()
+
+	def bornAll(self):
+		for cell in self:
+			cell.birth()
+
 	def getDimension(self):
 		return (self._rows, self._columns)
 
