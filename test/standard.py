@@ -17,7 +17,7 @@ mc_life2death_probs = {
 	8 : 1.00
 }
 
-class TestGol(unittest.TestCase):
+class Standard(unittest.TestCase):
 	def test_cell_getCoords(self):
 		cell = gol.Cell(1, 1)
 		self.assertEqual((1, 1), cell.getCoords())
@@ -26,15 +26,15 @@ class TestGol(unittest.TestCase):
 		cell = gol.Cell(1, 1)
 
 		cell.birth()
-		self.assertTrue(cell.alive())
-		self.assertFalse(cell.dead())
+		self.assertTrue(cell.isAlive())
+		self.assertFalse(cell.isDead())
 
 	def test_cell_death(self):
 		cell = gol.Cell(1, 1)
 
 		cell.death()
-		self.assertTrue(cell.dead())
-		self.assertFalse(cell.alive())
+		self.assertTrue(cell.isDead())
+		self.assertFalse(cell.isAlive())
 
 	def test_grid_init(self):
 		grid = gol.Grid(9, 9)
@@ -148,9 +148,9 @@ class TestGol(unittest.TestCase):
 
 	def test_grid_generateInitialState(self):
 		grid = gol.Grid(100, 100)
-		self.assertAlmostEqual(0.0, sum([x.alive() for x in grid]) / float(len(grid)), 1)
+		self.assertAlmostEqual(0.0, sum([x.isAlive() for x in grid]) / float(len(grid)), 1)
 		grid.generateInitialState()
-		self.assertAlmostEqual(0.5, sum([x.alive() for x in grid]) / float(len(grid)), 1)
+		self.assertAlmostEqual(0.5, sum([x.isAlive() for x in grid]) / float(len(grid)), 1)
 
 	def test_grid_cloneState(self):
 		test_matrix = (
@@ -165,7 +165,7 @@ class TestGol(unittest.TestCase):
 		test_matrix[1][1].birth()
 		grid.cloneState(test_matrix)
 
-		self.assertTrue(grid[1, 1].alive())
+		self.assertTrue(grid[1, 1].isAlive())
 		self.assertTrue(grid._grid is original_grid_ref)
 		self.assertFalse(grid._grid is test_matrix)
 
@@ -183,18 +183,18 @@ class TestGol(unittest.TestCase):
 				cell.death()
 
 			if n_neigh in gol.Cell.STATE["Starving"] or n_neigh in gol.Cell.STATE["Crowded"]:
-				self.assertTrue(cell.dead())
-				self.assertFalse(cell.alive())
+				self.assertTrue(cell.isDead())
+				self.assertFalse(cell.isAlive())
 			elif n_neigh in gol.Cell.STATE["Reproducing"]:
-				self.assertTrue(cell.alive())
-				self.assertFalse(cell.dead())
+				self.assertTrue(cell.isAlive())
+				self.assertFalse(cell.isDead())
 			elif n_neigh in gol.Cell.STATE["Stable"]:
-				if cell.alive():
-					self.assertTrue(cell.alive())
-					self.assertFalse(cell.dead())
-				if cell.dead():
-					self.assertTrue(cell.dead())
-					self.assertFalse(cell.alive())
+				if cell.isAlive():
+					self.assertTrue(cell.isAlive())
+					self.assertFalse(cell.isDead())
+				if cell.isDead():
+					self.assertTrue(cell.isDead())
+					self.assertFalse(cell.isAlive())
 			else:
 				raise AssertionError("State not registered for {} neighbours".format(n_neigh))
 
@@ -237,16 +237,16 @@ class TestGol(unittest.TestCase):
 		for cell in grid:
 			try:
 				if cell in block_cells:
-					self.assertTrue(cell.alive())
-					self.assertFalse(cell.dead())
+					self.assertTrue(cell.isAlive())
+					self.assertFalse(cell.isDead())
 				else:
-					self.assertTrue(cell.dead())
-					self.assertFalse(cell.alive())
+					self.assertTrue(cell.isDead())
+					self.assertFalse(cell.isAlive())
 			except AssertionError as e:
 				raise AssertionError("Error at cell {}: {}".format(cell, e.message))
 
 if __name__ == "__main__":
-	suite = unittest.TestLoader().loadTestsFromTestCase(TestGol)
+	suite = unittest.TestLoader().loadTestsFromTestCase(Standard)
 	unittest.TextTestRunner(verbosity=2).run(suite)
 
 

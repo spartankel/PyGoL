@@ -45,10 +45,10 @@ class Cell:
 	def death(self):
 		self._alive = False
 
-	def alive(self):
+	def isAlive(self):
 		return self._alive
 
-	def dead(self):
+	def isDead(self):
 		return not self._alive
 
 	def cloneState(self, other):
@@ -91,7 +91,7 @@ class Grid:
 		s_print = ""
 		for i in range(self._rows):
 			for j in range(self._columns):
-				plt_tkn = '*' if self[i, j].alive() else ' '
+				plt_tkn = '*' if self[i, j].isAlive() else ' '
 				s_print += plt_tkn + " "
 			s_print += "\n"
 		return s_print
@@ -136,7 +136,7 @@ class Grid:
 
 		how_many_alive_neigh = 0
 		for cell_neigh in n_list:
-			if cell_neigh.alive():
+			if cell_neigh.isAlive():
 				how_many_alive_neigh += 1
 
 		return how_many_alive_neigh
@@ -144,7 +144,7 @@ class Grid:
 	def updateCell(self, cell):
 		updated_cell_state = cell._alive
 
-		if cell.alive():
+		if cell.isAlive():
 			if self.getCellState(cell) is "Starving" or self.getCellState(cell) is "Crowded":
 				updated_cell_state = False
 		else:
