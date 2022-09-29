@@ -251,7 +251,7 @@ if __name__ == '__main__':
 		sys.exit("Watchout your params: {}".format(e.message))
 
 	print("Creating the grid ...")
-	prob_dict = mc_prob_a2d_table if args.monte_carlo else {}
+	prob_dict = mc_life2death_probs if args.monte_carlo else {}
 	grid = Grid(args.dim, args.dim, prob_dict)
 	grid.generateInitialState()
 
