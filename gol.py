@@ -218,10 +218,10 @@ class Grid:
 
 # Only for plotting purposes
 def put_cursor(x,y):
-	print "\x1b[{};{}H".format(y+1,x+1)
+	print("\x1b[{};{}H".format(y+1,x+1))
 
 def clear():
-	print "\x1b[2J"
+	print("\x1b[2J")
 
 # Argument parser
 def read_cmd(args):
@@ -250,7 +250,7 @@ if __name__ == '__main__':
 	except ValueError as e:
 		sys.exit("Watchout your params: {}".format(e.message))
 
-	print "Creating the grid ..."
+	print("Creating the grid ...")
 	prob_dict = mc_prob_a2d_table if args.monte_carlo else {}
 	grid = Grid(args.dim, args.dim, prob_dict)
 	grid.generateInitialState()
@@ -259,7 +259,7 @@ if __name__ == '__main__':
 	clear()
 	for step in range(args.steps):
 		put_cursor(0,0)
-		print grid
-		print "Step: {}".format(step)
+		print(grid)
+		print("Step: {}".format(step))
 		time.sleep(args.wait)
 		grid.update()
